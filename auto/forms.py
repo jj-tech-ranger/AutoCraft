@@ -1,6 +1,5 @@
 from django import forms
-from django.contrib.auth.models import User
-from .models import Customer, Vehicle, RepairJob, Part, Payment
+from auto.models import Customer, Vehicle, RepairJob, Part, Payment
 
 class LoginForm(forms.Form):
     """User login form"""
