@@ -1,0 +1,137 @@
+{% extends 'auto/base.html' %}
+
+{% block title %}Dashboard - AutoCraft{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+
+{% if is_admin or is_staff %}
+<!-- Admin/Staff Dashboard -->
+<div class="dashboard-stats">
+    <div class="stat-card">
+        <h3>{{ total_customers }}</h3>
+        <p>Total Customers</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ total_vehicles }}</h3>
+        <p>Total Vehicles</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ total_repairs }}</h3>
+        <p>Total Repairs</p>
+    </div>
+    <div class="stat-card">
+        <h3>KES {{ total_revenue|floatformat:2|default:"0.00" }}</h3>
+        <p>Total Revenue</p>
+    </div>
+    <div class="stat-card alert">
+        <h3>{{ pending_bills }}</h3>
+        <p>Pending Bills</p>
+    </div>
+    <div class="stat-card warning">
+        <h3>{{ low_stock_parts }}</h3>
+        <p>Low Stock Parts</p>
+    </div>
+</div>
+
+<div class="dashboard-section">
+    <h2>Recent Repairs</h2>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Job ID</th>
+                <th>Vehicle</th>
+                <th>Customer</th>
+                <th>Service</th>
+                <th>Date</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for repair in recent_repairs %}
+            <tr>
+                <td>{{ repair.jobid }}</td>
+                <td>{{ repair.vehicle }}</td>
+                <td>{{ repair.customer }}</td>
+                <td>{{ repair.service }}</td>
+                <td>{{ repair.dateperformed }}</td>
+                <td>KES {{ repair.cost }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="text-align: center;">No recent repairs</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% elif is_client %}
+<!-- Client Dashboard -->
+<div class="dashboard-section">
+    <h2>Welcome, {{ customer.get_full_name }}</h2>
+    
+    <h3>My Vehicles</h3>
+    <ul>
+        {% for vehicle in my_vehicles %}
+        <li>{{ vehicle }}</li>
+        {% empty %}
+        <li>No vehicles registered</li>
+        {% endfor %}
+    </ul>
+    
+    <h3>Recent Service History</h3>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Vehicle</th>
+                <th>Service</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for repair in my_repairs %}
+            <tr>
+                <td>{{ repair.dateperformed }}</td>
+                <td>{{ repair.vehicle }}</td>
+                <td>{{ repair.service }}</td>
+                <td>KES {{ repair.cost }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align: center;">No service history</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <h3>My Bills</h3>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Bill ID</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Payment Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bill in my_bills %}
+            <tr>
+                <td>{{ bill.billid }}</td>
+                <td>KES {{ bill.amount }}</td>
+                <td><span class="badge {% if bill.payment_status == 'Paid' %}badge-success{% else %}badge-danger{% endif %}">{{ bill.payment_status }}</span></td>
+                <td>{{ bill.paymentdate|default:"N/A" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align: center;">No bills</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+{% endblock %}
