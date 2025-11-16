@@ -31,3 +31,38 @@ def review_create(request, service_id):
         return redirect('services:service_detail', pk=service_id)
     
     return render(request, 'reviews/review_form.html', {'service': service})
+
+# CRUD Operations  
+def review_update(request, pk):
+    """Update an existing review"""
+    from django.contrib import messages
+    from django.shortcuts import redirect
+    
+    review = get_object_or_404(Review, pk=pk, customer=request.user)
+    
+    if request.method == 'POST':
+        from .forms import ReviewForm
+        form = ReviewForm(request.POST, instance=review)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Review updated successfully!')
+            return redirect('reviews:review_list')
+    else:
+        from .forms import ReviewForm
+        form = ReviewForm(instance=review)
+    
+    return render(request, 'reviews/review_form.html', {'form': form, 'review': review})
+
+def review_delete(request, pk):
+    """Delete a review"""
+    from django.contrib import messages
+    from django.shortcuts import redirect
+    
+    review = get_object_or_404(Review, pk=pk, customer=request.user)
+    
+    if request.method == 'POST':
+        review.delete()
+        messages.success(request, 'Review deleted successfully!')
+        return redirect('reviews:review_list')
+    
+    return render(request, 'reviews/review_confirm_delete.html', {'review': review})
