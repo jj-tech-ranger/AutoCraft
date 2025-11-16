@@ -1,0 +1,31 @@
+/* AutoCraft Center - Brand Colors */
+
+:root {
+    /* Primary Brand Colors */
+    --primary-color: #160078;
+    --secondary-color: #5a6782;
+    --accent-color: #8e44ad;
+    --primary-light: #3d1fa3;
+    --secondary-light: #7a8899;
+    
+    /* Background Colors */
+    --light-bg: #f8f9fa;
+    --dark-bg: #1a1a2e;
+    --white: #ffffff;
+    --black: #000000;
+    
+    /* Status Colors */
+    --success: #27ae60;
+    --warning: #f39c12;
+    --danger: #e74c3c;
+    --info: #3498db;
+    
+    /* Text Colors */
+    --text-primary: #2c3e50;
+    --text-secondary: #7f8c8d;
+    --text-light: #95a5a6;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    --gradient-overlay: linear-gradient(rgba(22, 0, 120, 0.8), rgba(142, 68, 173, 0.8));
+}
