@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Bookings - AutoCraft</title>
+    <style>
+        body { font-family: Arial; background: #f5f5f5; margin: 0; }
+        .header { background: #160078; color: white; padding: 20px; text-align: center; }
+        .container { max-width: 1000px; margin: 40px auto; padding: 20px; }
+        .booking-card { background: white; padding: 25px; margin-bottom: 20px; border-radius: 10px; border-left: 5px solid #160078; }
+        .booking-title { color: #160078; font-size: 20px; font-weight: bold; }
+        .booking-info { color: #5a6782; margin: 10px 0; }
+        .btn { background: #160078; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="header"><h1>My Bookings</h1></div>
+    <div class="container">
+        {% for booking in bookings %}
+        <div class="booking-card">
+            <div class="booking-title">{{ booking.service.name }}</div>
+            <div class="booking-info">Date: {{ booking.booking_date|date:"F d, Y" }}</div>
+            <div class="booking-info">Time: {{ booking.time_slot.start_time }}</div>
+            <a href="{% url 'bookings:booking_detail' booking.id %}" class="btn">View Details</a>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
