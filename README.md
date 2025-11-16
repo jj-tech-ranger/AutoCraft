@@ -23,11 +23,8 @@ AutoCraft is a full-featured garage management system that handles:
 
 ## Brand Colors
 
-- Primary: #7226ff (Purple)
-- Secondary: #875555 (Brown/Maroon)
-- Supporting: Black and White
-
-## Installation
+- Primary: #160078 (Deep Purple)
+- - Secondary: #5a6782 (Slate Gray)
 
 ### Prerequisites
 
