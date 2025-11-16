@@ -76,6 +76,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'AutoCraft.wsgi.application'
 
+# CSRF Settings
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000', 'http://localhost:8000']
+CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_HTTPONLY = False
+
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
