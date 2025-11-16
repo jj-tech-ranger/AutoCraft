@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - AutoCraft</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .header {
+            background-color: #160078;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .service-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(22, 0, 120, 0.2);
+        }
+        .service-title {
+            color: #160078;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .service-description {
+            color: #5a6782;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .service-price {
+            font-size: 20px;
+            color: #160078;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #160078;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #5a6782;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Our Services</h1>
+        <p>Professional automotive care for your vehicle</p>
+    </div>
+    
+    <div class="container">
+        <div class="services-grid">
+            {% for service in services %}
+            <div class="service-card">
+                <h2 class="service-title">{{ service.name }}</h2>
+                <p class="service-description">{{ service.description }}</p>
+                <p class="service-price">${{ service.price }}</p>
+                <p style="color: #5a6782; margin: 10px 0;">Duration: {{ service.duration }} minutes</p>
+                <a href="{% url 'services:service_detail' service.id %}" class="btn">View Details</a>
+            </div>
+            {% empty %}
+            <p>No services available at the moment.</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
