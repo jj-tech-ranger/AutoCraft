@@ -59,3 +59,32 @@ def booking_cancel(request, pk):
         return redirect('bookings:booking_list')
     
     return render(request, 'bookings/booking_cancel.html', {'booking': booking})
+
+    # CRUD Operations
+def booking_update(request, pk):
+    """Update an existing booking"""
+    booking = get_object_or_404(Booking, pk=pk, customer=request.user)
+    
+    if request.method == 'POST':
+        from .forms import BookingForm
+        form = BookingForm(request.POST, instance=booking)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Booking updated successfully!')
+            return redirect('bookings:booking_detail', pk=booking.pk)
+    else:
+        from .forms import BookingForm
+        form = BookingForm(instance=booking)
+    
+    return render(request, 'bookings/booking_form.html', {'form': form, 'booking': booking})
+
+def booking_delete(request, pk):
+    """Delete a booking"""
+    booking = get_object_or_404(Booking, pk=pk, customer=request.user)
+    
+    if request.method == 'POST':
+        booking.delete()
+        messages.success(request, 'Booking deleted successfully!')
+        return redirect('bookings:booking_list')
+    
+    return render(request, 'bookings/booking_confirm_delete.html', {'booking': booking})
