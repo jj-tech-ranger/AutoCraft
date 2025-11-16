@@ -13,7 +13,7 @@ from auto.permissions import is_admin, is_mechanic, is_customer
 def login_view(request):
     """User login"""
     if request.user.is_authenticated:
-        return redirect('dashboard')
+        return redirect('auto:dashboard')
     
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -25,7 +25,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, f'Welcome back, {user.get_full_name()}!')
-                return redirect('dashboard')
+                return redirect('auto:dashboard')
             else:
                 messages.error(request, 'Invalid username or password.')
     else:
@@ -38,7 +38,7 @@ def logout_view(request):
     """User logout"""
     logout(request)
     messages.success(request, 'You have been logged out successfully.')
-    return redirect('login')
+    return redirect('auto:login')
 
 # Dashboard Views
 @login_required
@@ -106,7 +106,7 @@ def job_create(request):
         if form.is_valid():
             job = form.save()
             messages.success(request, 'Repair job created successfully!')
-            return redirect('job_detail', pk=job.pk)
+            return redirect('auto:job_detail', pk=job.pk)
     else:
         form = RepairJobForm()
     
@@ -122,7 +122,7 @@ def job_update(request, pk):
         if form.is_valid():
             job = form.save()
             messages.success(request, 'Repair job updated successfully!')
-            return redirect('job_detail', pk=job.pk)
+            return redirect('auto:job_detail', pk=job.pk)
     else:
         form = RepairJobForm(instance=job)
     
@@ -136,6 +136,6 @@ def job_delete(request, pk):
     if request.method == 'POST':
         job.delete()
         messages.success(request, 'Repair job deleted successfully!')
-        return redirect('job_list')
+        return redirect('auto:job_list')
     
     return render(request, 'auto/job_confirm_delete.html', {'job': job})
