@@ -11,8 +11,7 @@ django-crispy-forms==2.1
 crispy-bootstrap5==0.7
 
 # Image Processing
-Pillow==10.2.0
-
+Pillow>=10.3.0
 # REST API (optional)
 djangorestframework==3.14.0
 django-cors-headers==4.3.1
