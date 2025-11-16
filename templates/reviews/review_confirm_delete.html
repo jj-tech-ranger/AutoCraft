@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Review - AutoCraft</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #160078;
+            --secondary-color: #5a6782;
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #4a5570;
+            border-color: #4a5570;
+        }
+        
+        .card {
+            border: none;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .alert-warning {
+            background-color: #fff3cd;
+            border-color: #ffc107;
+            color: #856404;
+        }
+        
+        .star-rating {
+            color: #ffc107;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="mb-0">Confirm Delete</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-warning" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
+                            <strong>Warning!</strong> This action cannot be undone.
+                        </div>
+                        
+                        <p class="mb-4">Are you sure you want to delete this review?</p>
+                        
+                        <div class="mb-3">
+                            <strong>Review Details:</strong>
+                            <div class="mt-2 p-3 bg-light rounded">
+                                <div class="mb-2">
+                                    <strong>Customer:</strong> {{ object.customer_name }}
+                                </div>
+                                <div class="mb-2">
+                                    <strong>Rating:</strong>
+                                    <span class="star-rating">
+                                        {% for i in "12345" %}
+                                            {% if forloop.counter <= object.rating %}
+                                                ★
+                                            {% else %}
+                                                ☆
+                                            {% endif %}
+                                        {% endfor %}
+                                    </span>
+                                </div>
+                                {% if object.comment %}
+                                <div class="mb-2">
+                                    <strong>Comment:</strong>
+                                    <p class="mb-0">{{ object.comment|truncatewords:20 }}</p>
+                                </div>
+                                {% endif %}
+                                <div>
+                                    <strong>Date:</strong> {{ object.created_at|date:"M d, Y" }}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-danger">Yes, Delete Review</button>
+                                <a href="{% url 'reviews:review_list' %}" class="btn btn-secondary">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
