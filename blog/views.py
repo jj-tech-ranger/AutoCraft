@@ -34,3 +34,56 @@ def blog_detail(request, slug):
         'recent_posts': recent_posts,
     }
     return render(request, 'blog/blog_detail.html', context)
+
+# CRUD Operations
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.shortcuts import redirect
+
+@login_required
+def blog_post_create(request):
+    """Create a new blog post"""
+    if request.method == 'POST':
+        from .forms import BlogPostForm
+        form = BlogPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            messages.success(request, 'Blog post created successfully!')
+            return redirect('blog:blog_detail', slug=post.slug)
+    else:
+        from .forms import BlogPostForm
+        form = BlogPostForm()
+    
+    return render(request, 'blog/blog_form.html', {'form': form})
+
+@login_required
+def blog_post_update(request, slug):
+    """Update an existing blog post"""
+    post = get_object_or_404(BlogPost, slug=slug, author=request.user)
+    
+    if request.method == 'POST':
+        from .forms import BlogPostForm
+        form = BlogPostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Blog post updated successfully!')
+            return redirect('blog:blog_detail', slug=post.slug)
+    else:
+        from .forms import BlogPostForm
+        form = BlogPostForm(instance=post)
+    
+    return render(request, 'blog/blog_form.html', {'form': form, 'post': post})
+
+@login_required
+def blog_post_delete(request, slug):
+    """Delete a blog post"""
+    post = get_object_or_404(BlogPost, slug=slug, author=request.user)
+    
+    if request.method == 'POST':
+        post.delete()
+        messages.success(request, 'Blog post deleted successfully!')
+        return redirect('blog:blog_list')
+    
+    return render(request, 'blog/blog_confirm_delete.html', {'post': post})
