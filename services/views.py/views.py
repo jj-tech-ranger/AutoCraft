@@ -30,3 +30,39 @@ def category_services(request, slug):
         'services': services,
     }
     return render(request, 'services/category_services.html', context)
+
+# CRUD Views
+from django.shortcuts import redirect
+from django.contrib import messages
+from .forms import ServiceForm
+
+def service_create(request):
+    if request.method == 'POST':
+        form = ServiceForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Service created successfully!')
+            return redirect('services:service_list')
+    else:
+        form = ServiceForm()
+    return render(request, 'services/service_form.html', {'form': form})
+
+def service_update(request, pk):
+    service = get_object_or_404(Service, pk=pk)
+    if request.method == 'POST':
+        form = ServiceForm(request.POST, request.FILES, instance=service)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Service updated successfully!')
+            return redirect('services:service_detail', slug=service.slug)
+    else:
+        form = ServiceForm(instance=service)
+    return render(request, 'services/service_form.html', {'form': form, 'service': service})
+
+def service_delete(request, pk):
+    service = get_object_or_404(Service, pk=pk)
+    if request.method == 'POST':
+        service.delete()
+        messages.success(request, 'Service deleted successfully!')
+        return redirect('services:service_list')
+    return render(request, 'services/service_confirm_delete.html', {'service': service})
