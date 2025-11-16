@@ -1,0 +1,51 @@
+/* AutoCraft Main Stylesheet - Brand Colors #160078 (Primary) and #5a6782 (Secondary) */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f8f9fa; }
+
+/* Brand Colors */
+.brand-primary { color: #160078 !important; }
+.brand-secondary { color: #5a6782 !important; }
+.bg-brand-primary { background-color: #160078 !important; }
+.bg-brand-secondary { background-color: #5a6782 !important; }
+
+/* Navigation */
+.navbar { background: #160078; box-shadow: 0 2px 4px rgba(0,0,0,.1); }
+.navbar-brand, .nav-link { color: #fff !important; transition: all .3s; }
+.nav-link:hover { color: #ddd !important; transform: translateY(-2px); }
+
+/* Buttons */
+.btn-primary { background: #160078; border-color: #160078; }
+.btn-primary:hover { background: #0e0055; border-color: #0e0055; }
+.btn-secondary { background: #5a6782; border-color: #5a6782; }
+.btn-secondary:hover { background: #4a5672; border-color: #4a5672; }
+
+/* Cards */
+.card { border: none; box-shadow: 0 2px 8px rgba(0,0,0,.1); transition: all .3s; }
+.card:hover { transform: translateY(-5px); box-shadow: 0 4px 12px rgba(0,0,0,.15); }
+.card-header { background: #160078; color: #fff; font-weight: 600; }
+
+/* Forms */
+.form-control:focus { border-color: #160078; box-shadow: 0 0 0 .2rem rgba(22,0,120,.25); }
+
+/* Footer */
+footer { background: #160078; color: #fff; padding: 40px 0; margin-top: 60px; }
+footer a { color: #ddd; text-decoration: none; }
+footer a:hover { color: #fff; }
+
+/* Hero Section */
+.hero { background: linear-gradient(135deg, #160078 0%, #5a6782 100%); color: #fff; padding: 100px 0; text-align: center; }
+.hero h1 { font-size: 3rem; font-weight: bold; margin-bottom: 20px; }
+.hero p { font-size: 1.3rem; margin-bottom: 30px; }
+
+/* Sections */
+.section { padding: 60px 0; }
+.section-title { color: #160078; font-size: 2.5rem; font-weight: bold; margin-bottom: 40px; text-align: center; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero h1 { font-size: 2rem; }
+    .hero p { font-size: 1rem; }
+    .section-title { font-size: 2rem; }
+}
